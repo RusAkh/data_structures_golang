@@ -22,7 +22,6 @@ func Build_tree(arr []int, i, n int) *Node {
 
 	}
 	return root
-
 }
 
 func main() {

@@ -1,22 +1,25 @@
 package avl
 
-// always pass 0 to i, will increase with recursion
-func Build_tree(values []int, i int) *Node {
+import "fmt"
+
+// Always pass 0 to i, will increase with recursion.
+// It Always passes same n, because computing len() on each iteration is costly
+func Build_tree(values []int, i, n int) *Node {
 	var node *Node
-	n := len(values)
 	if i < n {
-		node = &Node{value: values[i]}
+		node = &Node{Value: values[i]}
+		fmt.Println(node)
+		node.Left = Build_tree(values, 2*i+1, n)
 
-		node.left = Build_tree(values, 2*i+1)
-
-		node.right = Build_tree(values, 2*i+2)
+		node.Right = Build_tree(values, 2*i+2, n)
 	}
 	setHeights(node)
 	return node
 }
 
 func setHeights(root *Node) {
-	root.height = Max(nodeHeight(root.left), nodeHeight(root.right)) + 1
+	fmt.Println("root ", root)
+	root.Height = Max(nodeHeight(root.Left), nodeHeight(root.Right)) + 1
 }
 
 func Max(a, b int64) int64 {
@@ -29,9 +32,9 @@ func Max(a, b int64) int64 {
 func nodeHeight(root *Node) int64 {
 	if root == nil {
 		return -1
-	} else if root.left == nil && root.right == nil {
+	} else if root.Left == nil && root.Right == nil {
 		return 0
 	} else {
-		return Max(nodeHeight(root.left), nodeHeight(root.right)) + 1
+		return Max(nodeHeight(root.Left), nodeHeight(root.Right)) + 1
 	}
 }
